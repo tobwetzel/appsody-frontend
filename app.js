@@ -19,53 +19,53 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        static_path: 'static',
-        theme: process.env.THEME || 'flatly',
-        flask_debug: process.env.FLASK_DEBUG || 'false'
-    });
+  res.render('index', {
+    static_path: 'static',
+    theme: process.env.THEME || 'flatly',
+    flask_debug: process.env.FLASK_DEBUG || 'false'
+  });
 });
 
 
 
-    app.post('/signup', function(req, res) {
-      var data = JSON.stringify(req.body)
-      console.log(data)
+app.post('/signup', function(req, res) {
+  var data = JSON.stringify(req.body)
+  console.log(data)
 
-      var options = {
-        host: url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).hostname || 'host.docker.internal',
-        port: url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).port || 3001,
-        path: '/signup',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(data)
-        }
-      };
+  var options = {
+    host: process.env.APPSODY_BACKEND_DEFAULT_URL ? url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).hostname : 'host.docker.internal',
+    port: process.env.APPSODY_BACKEND_DEFAULT_URL ? url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).port : 3001,
+    path: '/signup',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(data)
+    }
+  };
 
-      var backendreq = http.request(options, resp => {
-        resp.setEncoding('utf8');
-        let body = "";
-        console.log(`statusCode: ${resp.statusCode}`)
-        resp.on('data', (d) => {
-          body += d;
-        })
-        resp.on('end', () => {
-          console.log(resp.statusCode)
-          res.status(resp.statusCode).send(body).end()
-        })
-      });
+  var backendreq = http.request(options, resp => {
+    resp.setEncoding('utf8');
+    let body = "";
+    console.log(`statusCode: ${resp.statusCode}`)
+    resp.on('data', (d) => {
+      body += d;
+    })
+    resp.on('end', () => {
+      console.log(resp.statusCode)
+      res.status(resp.statusCode).send(body).end()
+    })
+  });
 
-      backendreq.on('error', (error) => {
-        console.log(error)
-        res.status(backendreq.status).send(backendred.body).end()
-      })
+  backendreq.on('error', (error) => {
+    console.log(error)
+    res.status(backendreq.status).send(backendred.body).end()
+  })
 
-      backendreq.write(data)
-      backendreq.end()
+  backendreq.write(data)
+  backendreq.end()
 
-      console.log("done")
-    });
+  console.log("done")
+});
 
 
 // error handler
