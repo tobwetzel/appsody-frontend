@@ -8,6 +8,8 @@ var url = require('url');
 
 var app = express();
 
+let BACKEND_API_DEFAULT_PORT = 3001;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -34,7 +36,7 @@ app.post('/signup', function(req, res) {
 
   var options = {
     host: process.env.APPSODY_BACKEND_DEFAULT_URL ? url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).hostname : 'host.docker.internal',
-    port: process.env.APPSODY_BACKEND_DEFAULT_URL ? url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).port : 3001,
+    port: process.env.APPSODY_BACKEND_DEFAULT_URL ? url.parse(process.env.APPSODY_BACKEND_DEFAULT_URL).port : BACKEND_API_DEFAULT_PORT,
     path: '/signup',
     method: 'POST',
     headers: {

@@ -5,7 +5,8 @@ appsody deploy --generate-only
 
 # Backend
 appsody run -p 3001:3000 -p 9230:9229
-appsody deploy -t csantanapr/appsody-backend --push -n kabanero
+appsody deploy -t csantanapr/appsody-backend -n kabanero --push
+appsody deploy -t csantanapr/appsody-backend -n kabanero
 
 
 # Frontend
