@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.get('/', function(req, res) {
   res.render('index', {
     static_path: 'static',
@@ -27,8 +26,6 @@ app.get('/', function(req, res) {
     flask_debug: process.env.FLASK_DEBUG || 'false'
   });
 });
-
-
 
 app.post('/signup', function(req, res) {
   var data = JSON.stringify(req.body)
@@ -68,7 +65,6 @@ app.post('/signup', function(req, res) {
 
   console.log("done")
 });
-
 
 // error handler
 app.use(function(err, req, res, next) {
