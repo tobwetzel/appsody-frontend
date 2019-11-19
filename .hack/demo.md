@@ -1,25 +1,45 @@
 # Notes for Kubecon
-appsody init incubator/nodejs-express none
-
-appsody deploy --generate-only
 
 # Backend
+Appsodify the app
+```
+appsody init incubator/nodejs-express none
+appsody deploy --generate-only
+```
+Run App
+```
 appsody run -p 3001:3000 -p 9230:9229
-appsody deploy -t csantanapr/appsody-backend -n kabanero --push
-appsody deploy -t csantanapr/appsody-backend -n kabanero
+```
 
+Deploy App direct
+```
+appsody deploy -t csantanapr/appsody-backend -n kabanero --push
+```
 
 # Frontend
-appsody run
-
-Environment variables hardcoded
+Appsodify the app
 ```
+appsody init incubator/nodejs-express none
+appsody deploy --generate-only
+```
+Run App
+```
+appsody run
+```
+
+Get App ready for git deploy, update `app-deploy.yaml`
+```yaml
 spec:
   env:
     - name: APPSODY_BACKEND_DEFAULT_URL
       value: http://appsody-backend:3000/
 ```
+
+
+Deploy direct
+```
 appsody deploy -t csantanapr/appsody-frontend --push -n kabanero
+```
 
 
 
