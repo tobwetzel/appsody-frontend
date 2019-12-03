@@ -2,7 +2,7 @@
 
 This demo is a simple node app representing a backend for a microservice.
 
-It provides a single endpoint accepting http `POST` on `/signup`
+It provides a web form to signup new users for a news letter
 
 ## Instructions
 
